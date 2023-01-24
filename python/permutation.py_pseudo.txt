@@ -1,0 +1,29 @@
+DEFINE FUNCTION per( p,  up) :
+
+        IF (up=="") :
+
+            OUTPUT(p)
+
+            RETURN
+
+        SET ch TO up[0]
+
+        SET i TO 0
+
+        WHILE (i <= len(p)) :
+
+            SET f TO p[0:i]
+
+            SET s TO p[i:len(p)]
+
+            per(f + str(ch) + s, up[1:])
+
+            i += 1
+
+
+
+IF __name__ EQUALS "__main__":
+
+    string=INPUT("Enter the String: ")
+    
+    OUTPUT(CALL per("",string))

@@ -1,0 +1,32 @@
+IMPORT re
+
+DEFINE FUNCTION freq(lines):
+    counter={}
+    FOR line IN lines:
+        FOR char IN line:
+            if(char IN counter):
+                counter[char]=counter[char]+1;
+            ELSE:
+                counter[char]=1;
+    OUTPUT(counter)
+    RETURN  
+
+
+DEFINE FUNCTION freq_word(lines):
+    counter={"for":0,"while" : 0,"do":0,"if": 0,"else":0,"switch":0,"int":0,"float":0,"char":0,"OUTPUTf":0,"scanf":0,"include" : 0,"RETURN":0}
+    FOR line IN lines:
+        line=re.split(r"[{(\s\d)}]", line)
+        FOR word IN line:
+            if(word IN counter):
+                counter[word]=counter[word]+1;
+    OUTPUT(counter);
+    RETURN
+
+
+IF __name__ EQUALS "__main__":
+C_file=Enter C File name
+SET main_file TO open(C_file, 'r+')
+main_file_lines=main_file.readlines();
+freq(main_file_lines)
+freq_word(main_file_lines)
+

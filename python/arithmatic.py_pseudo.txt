@@ -1,0 +1,180 @@
+DEFINE FUNCTION eval(postfix):
+
+	SET stack TO []
+
+	FOR token IN postfix:
+
+		IF token EQUALS '+':
+
+			SET a TO stack.pop()
+
+			SET b TO stack.pop()
+
+
+
+			stack.append(a + b)
+
+		ELSEIF token EQUALS '-':
+
+			SET b TO stack.pop()
+
+			SET a TO stack.pop()
+
+
+
+			stack.append(a - b)
+
+		ELSEIF token EQUALS '*':
+
+			SET a TO stack.pop()
+
+			SET b TO stack.pop()
+
+
+
+			stack.append(a * b)
+
+		ELSEIF token EQUALS '/':
+
+			SET b TO stack.pop()
+
+			SET a TO stack.pop()
+
+
+
+			stack.append(a // b)
+
+		ELSEIF token EQUALS '^':
+
+			SET b TO stack.pop()
+
+			SET a TO stack.pop()
+
+
+
+			stack.append(pow(a,b))
+
+		ELSE:
+
+			stack.append(token)
+
+
+
+	RETURN stack[-1]
+
+
+
+DEFINE FUNCTION calculate( s: str) -> int:
+
+	SET stack TO []
+
+	SET output TO []
+
+
+
+	SET rank TO {
+
+		'+': 1,
+
+		'-': 1,
+
+		'*': 2,
+
+		'/': 2,
+
+        '^': 3,
+
+	}
+
+
+
+	SET num TO None
+
+
+
+	FOR c IN s:
+
+		IF c EQUALS ' ':
+
+			continue
+
+
+
+		IF c IN "0123456789":
+
+			IF num is None:
+
+				SET num TO 0
+
+			SET num TO num * 10 + int(c)
+
+			continue
+
+
+
+		IF num is not None:
+
+			output.append(num)
+
+			SET num TO None
+
+
+
+		IF c EQUALS '(':
+
+			stack.append('(')
+
+		ELSEIF c EQUALS ')':
+
+			
+
+			WHILE stack[-1] != '(':
+
+				output.append(stack.pop())
+
+
+
+			
+
+			stack.pop()
+
+		ELSE:
+
+			
+
+			WHILE stack and stack[-1] != '(' and rank[stack[-1]] >= rank[c]:
+
+				output.append(stack.pop())
+
+
+
+			stack.append(c)
+
+
+
+	
+
+	IF num != None:
+
+		output.append(num)
+
+	WHILE stack:
+
+		output.append(stack.pop())
+
+
+
+	RETURN output
+
+
+
+
+
+IF __name__ EQUALS "__main__":
+
+    math=INPUT("Enter the expression: ")
+
+    OUTPUT(eval(calculate(math)))
+
+
+

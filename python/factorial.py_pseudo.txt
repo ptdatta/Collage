@@ -1,0 +1,45 @@
+IMPORT sys
+
+SET The recurtion limit to 10000
+
+
+
+DEFINE FUNCTION fac(n):
+
+    if(n<2):
+
+        RETURN "1"
+
+    RETURN multiply(str(n),fac(n-1))
+
+
+
+DEFINE FUNCTION multiply(num1, num2):
+
+        SET res TO 0
+
+        SET carry1 TO 1
+
+        FOR n1 IN num1[::-1]:
+
+            SET carry2 TO 1
+
+            FOR n2 IN num2[::-1]:
+
+                res += int(n1)*int(n2)*carry1*carry2
+
+                carry2 *= 10
+
+            carry1 *= 10
+
+        RETURN str(res)
+
+
+
+IF __name__ EQUALS "__main__":
+
+    num=int(INPUT("Enter number: ",))
+
+    OUTPUT("Factorial is: ",CALL fac(num))
+
+    

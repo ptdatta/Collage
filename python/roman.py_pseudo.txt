@@ -1,0 +1,26 @@
+DEFINE FUNCTION intToRoman(num):
+    SET values TO [ 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 ]
+    SET numerals TO [ "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" ]
+    SET res TO ""
+    FOR i, v IN enumerate(values):
+        res += (num//v) * numerals[i]
+        num %= v
+    RETURN res
+
+DEFINE FUNCTION romanToInt(s):
+        p={'M':1000,'D':500,'C':100,'L':50,'X':10,'V':5,'I':1}
+        ans=0;
+        left=0
+        FOR v IN s:
+            IF left<p[v]:
+                ans=ans-2*left
+            ans=ans+p[v]
+            left=p[v]
+        RETURN ans
+
+IF __name__ EQUALS "__main__":
+    num=int(INPUT("Enter number: "))
+    OUTPUT("Roman => ",CALL intToRoman(num))
+    roman=INPUT("Enter roman value: ")
+    OUTPUT("Integer => ",CALL romanToInt(roman))
+
